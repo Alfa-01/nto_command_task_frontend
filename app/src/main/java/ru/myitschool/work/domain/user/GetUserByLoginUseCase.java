@@ -7,14 +7,14 @@ import java.util.function.Consumer;
 import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.entities.UserEntity;
 
-public class GetUserByIdUseCase {
+public class GetUserByLoginUseCase {
     private final UserRepository repository;
 
-    public GetUserByIdUseCase(UserRepository repository) {
+    public GetUserByLoginUseCase(UserRepository repository) {
         this.repository = repository;
     }
 
-    public void execute(@NonNull String id, @NonNull Consumer<Status<UserEntity>> callback) {
-        repository.getUserById(id, callback);
+    public void execute(@NonNull String login, @NonNull Consumer<Status<UserEntity>> callback) {
+        repository.getUserByLogin(login, callback);
     }
 }

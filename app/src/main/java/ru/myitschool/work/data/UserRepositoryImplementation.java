@@ -5,16 +5,19 @@ import androidx.annotation.NonNull;
 import java.util.function.Consumer;
 
 import ru.myitschool.work.data.network.RetrofitFactory;
+import ru.myitschool.work.data.source.Credentials;
 import ru.myitschool.work.data.source.UserApi;
 import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.entities.UserEntity;
+import ru.myitschool.work.domain.login.LoginRepository;
 import ru.myitschool.work.domain.user.UserRepository;
 import ru.myitschool.work.utils.CallToConsumer;
 
-public class UserRepositoryImplementation implements UserRepository {
+public class UserRepositoryImplementation implements UserRepository, LoginRepository {
 
     private static UserRepositoryImplementation INSTANCE;
     private final UserApi userApi = RetrofitFactory.getInstance().getUserApi();
+    private final Credentials credentials = Credentials.getInstance();
 
     private UserRepositoryImplementation() {}
 
@@ -25,16 +28,16 @@ public class UserRepositoryImplementation implements UserRepository {
         return INSTANCE;
     }
     @Override
-    public void getUserById(@NonNull String id, @NonNull Consumer<Status<UserEntity>> callback) {
+    public void getUserByLogin(@NonNull String login, @NonNull Consumer<Status<UserEntity>> callback) {
 
-        userApi.getById(id).enqueue(new CallToConsumer<>(
+        userApi.getByLogin(login).enqueue(new CallToConsumer<>(
                 callback,
                 userDto -> {
-                    final String resultId = userDto.id;
+                    final String resultLogin = userDto.login;
                     final String name = userDto.name;
-                    if (resultId != null && name != null) {
+                    if (resultLogin != null && name != null) {
                         return new UserEntity(
-                                resultId,
+                                resultLogin,
                                 name,
                                 userDto.lastVisit,
                                 userDto.photoUrl,
@@ -45,5 +48,18 @@ public class UserRepositoryImplementation implements UserRepository {
                     }
                 }
         ));
+    }
+
+    @Override
+    public void isUserExist(@NonNull String login, Consumer<Status<Void>> callback) {
+        userApi.isExist(login).enqueue(new CallToConsumer<>(
+                callback,
+                dto -> null
+        ));
+    }
+
+    @Override
+    public void logoutUser() {
+        credentials.setAuthData(null);
     }
 }

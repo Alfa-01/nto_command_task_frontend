@@ -10,16 +10,16 @@ public class UserDto {
     @Nullable
     @SerializedName("name")
     public String name;
+    @Nullable
     @SerializedName("lastVisit")
-    @Nullable
     public String lastVisit;
+    @Nullable
     @SerializedName("photoUrl")
-    @Nullable
     public String photoUrl;
+    @Nullable
     @SerializedName("position")
-    @Nullable
     public String position;
-    @SerializedName("id")
     @Nullable
-    public String id;
+    @SerializedName("login")
+    public String login;
 }

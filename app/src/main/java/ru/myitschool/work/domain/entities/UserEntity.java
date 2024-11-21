@@ -9,7 +9,7 @@ public class UserEntity {
     @NonNull
     private final String name;
     @NonNull
-    private final String id;
+    private final String login;
     @Nullable
     private final String last_visit;
     @Nullable
@@ -19,7 +19,7 @@ public class UserEntity {
 
     @NonNull
     public String getId() {
-        return id;
+        return login;
     }
 
     @Nullable
@@ -43,12 +43,12 @@ public class UserEntity {
     }
 
     public UserEntity(
-            @NonNull String id,
+            @NonNull String login,
             @NonNull String name,
             @Nullable String last_visit,
             @Nullable String photoUrl,
             @Nullable String position) {
-        this.id = id;
+        this.login = login;
         this.name = name;
         this.last_visit = last_visit;
         this.photoUrl = photoUrl;

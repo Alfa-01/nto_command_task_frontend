@@ -2,4 +2,7 @@
     <string name="app_name">NTO Pass</string>
     <string name="logout_text">Выйти из аккаунта</string>
     <string name="scan_qr_text">Сканировать QR-код</string>
+    <string name="login_hint">Введите логин</string>
+    <string name="welcome_text">Добро пожаловать</string>
+    <string name="login">Войти</string>
 </resources>

@@ -7,6 +7,8 @@ import ru.myitschool.work.data.dto.UserDto;
 
 public interface UserApi {
 
-    @GET("user/{id}")
-    Call<UserDto> getById(@Path("id") String id);
+    @GET("user/{login}")
+    Call<UserDto> getByLogin(@Path("login") String login);
+    @GET("user/username/{username}")
+    Call<Void> isExist(@Path("username") String login);
 }

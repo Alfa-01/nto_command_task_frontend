@@ -9,14 +9,14 @@ import androidx.lifecycle.ViewModel;
 import ru.myitschool.work.data.UserRepositoryImplementation;
 import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.entities.UserEntity;
-import ru.myitschool.work.domain.user.GetUserByIdUseCase;
+import ru.myitschool.work.domain.user.GetUserByLoginUseCase;
 
 public class UserViewModel extends ViewModel {
 
     private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>();
     public final LiveData<State> stateLiveData = mutableStateLiveData;
 
-    public final GetUserByIdUseCase getUserByIdUseCase = new GetUserByIdUseCase(
+    public final GetUserByLoginUseCase getUserByLoginUseCase = new GetUserByLoginUseCase(
             UserRepositoryImplementation.getInstance()
     );
 
@@ -28,7 +28,7 @@ public class UserViewModel extends ViewModel {
 
     public void update(@NonNull String id) {
         mutableStateLiveData.setValue(new State(null, null, true));
-        getUserByIdUseCase.execute(id, status -> {
+        getUserByLoginUseCase.execute(id, status -> {
             mutableStateLiveData.postValue(fromStatus(status));
         });
     }

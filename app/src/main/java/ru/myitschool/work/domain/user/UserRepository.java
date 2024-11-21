@@ -10,5 +10,5 @@ import ru.myitschool.work.domain.entities.UserEntity;
 
 public interface UserRepository {
 
-    void getUserById(@NonNull String id, @NonNull Consumer<Status<UserEntity>> callback);
+    void getUserByLogin(@NonNull String login, @NonNull Consumer<Status<UserEntity>> callback);
 }
