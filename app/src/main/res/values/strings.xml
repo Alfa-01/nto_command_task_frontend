@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NTO Pass</string>
+    <string name="logout_text">Выйти из аккаунта</string>
+    <string name="scan_qr_text">Сканировать QR-код</string>
+</resources>
