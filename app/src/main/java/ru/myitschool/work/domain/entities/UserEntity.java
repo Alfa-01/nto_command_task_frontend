@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 public class UserEntity {
 
     @NonNull
+    private final String id;
+    @NonNull
     private final String name;
     @NonNull
     private final String login;
@@ -19,7 +21,7 @@ public class UserEntity {
 
     @NonNull
     public String getId() {
-        return login;
+        return id;
     }
 
     @Nullable
@@ -33,7 +35,7 @@ public class UserEntity {
     }
 
     @Nullable
-    public String getPhoto() {
+    public String getPhotoUrl() {
         return photoUrl;
     }
 
@@ -42,12 +44,18 @@ public class UserEntity {
         return position;
     }
 
+    @NonNull
+    public String getLogin() {
+        return login;
+    }
+
     public UserEntity(
-            @NonNull String login,
+            @NonNull String id, @NonNull String login,
             @NonNull String name,
             @Nullable String last_visit,
             @Nullable String photoUrl,
             @Nullable String position) {
+        this.id = id;
         this.login = login;
         this.name = name;
         this.last_visit = last_visit;

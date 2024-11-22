@@ -16,7 +16,7 @@ public class IsUserExistUseCase {
 
     public void execute(@NonNull String login, Consumer<Status<Boolean>> callback) {
         repository.isUserExist(login, status -> {
-            boolean isAvailable = status.getStatusCode() == 200 || status.getStatusCode() == 404;
+            boolean isAvailable = status.getStatusCode() == 200 || status.getStatusCode() == 401;
             callback.accept(
                     new Status<>(
                             status.getStatusCode(),

@@ -1,5 +1,7 @@
 package ru.myitschool.work.ui.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -26,6 +28,16 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getContext() != null) {
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+            if (sharedPreferences.getString("login", null) != null && getView() != null) {
+
+                Navigation.findNavController(getView()).navigate(
+                        R.id.action_loginFragment_to_userFragment);
+            }
+        }
+
         binding = FragmentLoginBinding.bind(view);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.username.addTextChangedListener(new OnChangeText() {
@@ -39,6 +51,7 @@ public class LoginFragment extends Fragment {
         subscribe(viewModel);
     }
 
+
     private void subscribe(LoginViewModel viewModel) {
         viewModel.errorLiveData.observe(getViewLifecycleOwner(), error -> {
             Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
@@ -47,8 +60,15 @@ public class LoginFragment extends Fragment {
             binding.login.setClickable(state.isButtonActive());
         });
         viewModel.openProfileLiveData.observe(getViewLifecycleOwner(), (unused) -> {
-            View view = getView();
-            if (view == null) return;
+
+            if (getContext() != null) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("login", binding.username.getText().toString());
+                editor.commit();
+            }
+
+            if (getView() == null) return;
 
             Navigation.findNavController(getView()).navigate(
                     R.id.action_loginFragment_to_userFragment);

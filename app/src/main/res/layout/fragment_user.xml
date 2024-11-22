@@ -44,6 +44,12 @@
 
     <Button
         android:id="@+id/refresh"
+        android:text="@string/refresh_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/scan"
         android:text="@string/scan_qr_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -54,7 +60,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:flow_verticalGap="24dp"
-        app:constraint_referenced_ids="fullname,photo,position,lastEntry,error,logout,refresh"
+        app:constraint_referenced_ids="fullname,photo,position,lastEntry,error,logout,refresh,scan"
         app:flow_lastVerticalStyle="spread"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

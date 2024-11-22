@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;
 
+import ru.myitschool.work.data.dto.QrDto;
 import ru.myitschool.work.data.network.RetrofitFactory;
 import ru.myitschool.work.data.source.Credentials;
 import ru.myitschool.work.data.source.UserApi;
+import ru.myitschool.work.domain.entities.QrEntity;
 import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.entities.UserEntity;
 import ru.myitschool.work.domain.login.LoginRepository;
+import ru.myitschool.work.domain.qr.QrRepository;
 import ru.myitschool.work.domain.user.UserRepository;
 import ru.myitschool.work.utils.CallToConsumer;
 
-public class UserRepositoryImplementation implements UserRepository, LoginRepository {
+public class UserRepositoryImplementation implements UserRepository, LoginRepository, QrRepository {
 
     private static UserRepositoryImplementation INSTANCE;
     private final UserApi userApi = RetrofitFactory.getInstance().getUserApi();
@@ -34,9 +37,11 @@ public class UserRepositoryImplementation implements UserRepository, LoginReposi
                 callback,
                 userDto -> {
                     final String resultLogin = userDto.login;
+                    final String id = userDto.id;
                     final String name = userDto.name;
-                    if (resultLogin != null && name != null) {
+                    if (resultLogin != null && id != null && name != null) {
                         return new UserEntity(
+                                id,
                                 resultLogin,
                                 name,
                                 userDto.lastVisit,
@@ -61,5 +66,14 @@ public class UserRepositoryImplementation implements UserRepository, LoginReposi
     @Override
     public void logoutUser() {
         credentials.setAuthData(null);
+    }
+
+    @Override
+    public void pushQr(@NonNull QrEntity qrEntity, @NonNull Consumer<Status<Void>> callback) {
+        userApi.openDoor(qrEntity.getLogin(),
+                new QrDto(qrEntity.getQr())).enqueue(new CallToConsumer<>(
+                        callback,
+                        dto -> null
+        ));
     }
 }

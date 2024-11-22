@@ -22,13 +22,13 @@ public class UserViewModel extends ViewModel {
 
 
 
-    public UserViewModel(String id) {
-        update(id);
+    public UserViewModel(String login) {
+        update(login);
     }
 
-    public void update(@NonNull String id) {
+    public void update(@NonNull String login) {
         mutableStateLiveData.setValue(new State(null, null, true));
-        getUserByLoginUseCase.execute(id, status -> {
+        getUserByLoginUseCase.execute(login, status -> {
             mutableStateLiveData.postValue(fromStatus(status));
         });
     }

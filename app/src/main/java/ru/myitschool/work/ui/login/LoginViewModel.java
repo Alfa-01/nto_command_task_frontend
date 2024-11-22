@@ -1,5 +1,7 @@
 package ru.myitschool.work.ui.login;
 
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -52,6 +54,9 @@ public class LoginViewModel extends ViewModel {
             if (status.getValue() == null || status.getErrors() != null) {
                 mutableErrorLiveData.postValue("Something went wrong. Try again later");
                 return;
+            }
+            if (status.getStatusCode() == 401) {
+                mutableErrorLiveData.postValue("Логина не существует или неверный");
             }
             if (status.getStatusCode() == 200) {
                 mutableOpenProfileLiveData.postValue(null);

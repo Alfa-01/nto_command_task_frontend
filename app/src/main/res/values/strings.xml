@@ -5,4 +5,8 @@
     <string name="login_hint">Введите логин</string>
     <string name="welcome_text">Добро пожаловать</string>
     <string name="login">Войти</string>
+    <string name="refresh_data">Обновить данные</string>
+    <string name="to_main_menu">Закрыть</string>
+    <string name="door_opened">Дверь открыта</string>
+    <string name="error">Ошибка доступа</string>
 </resources>
