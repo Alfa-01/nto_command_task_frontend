@@ -21,7 +21,7 @@ import ru.myitschool.work.ui.qr.scan.QrScanDestination;
 public class QrResultFragment extends Fragment {
 
     private FragmentQrResultBinding binding;
-    private Bundle resultQr;
+    private String resultQr;
     private QrResultViewModel viewModel;
 
     public QrResultFragment() {
@@ -35,7 +35,7 @@ public class QrResultFragment extends Fragment {
         getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                resultQr = result;
+                resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
             }
         });
     }
@@ -69,8 +69,8 @@ public class QrResultFragment extends Fragment {
         if (getContext() != null) {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
             String login = sharedPreferences.getString("login", null);
-            if (login != null && getView() != null) {
-                viewModel.update(login, "12314543654745676");
+            if (login != null && resultQr != null) {
+                viewModel.update(login, resultQr);
             }
         }
 

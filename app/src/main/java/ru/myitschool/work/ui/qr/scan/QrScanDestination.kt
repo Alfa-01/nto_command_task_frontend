@@ -20,7 +20,6 @@ data object QrScanDestination {
         } else {
             null
         }
-
     }
 
     internal fun packToBundle(data: String): Bundle {
