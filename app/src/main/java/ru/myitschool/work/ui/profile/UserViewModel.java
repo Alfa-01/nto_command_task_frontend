@@ -1,5 +1,7 @@
 package ru.myitschool.work.ui.profile;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -13,32 +15,22 @@ import ru.myitschool.work.domain.user.GetUserByLoginUseCase;
 
 public class UserViewModel extends ViewModel {
 
-    private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>();
+    private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<>();
     public final LiveData<State> stateLiveData = mutableStateLiveData;
 
     public final GetUserByLoginUseCase getUserByLoginUseCase = new GetUserByLoginUseCase(
             UserRepositoryImplementation.getInstance()
     );
 
-
-
-    public UserViewModel(String login) {
-        update(login);
-    }
-
     public void update(@NonNull String login) {
         mutableStateLiveData.setValue(new State(null, null, true));
         getUserByLoginUseCase.execute(login, status -> {
-            mutableStateLiveData.postValue(fromStatus(status));
+            mutableStateLiveData.postValue(new State(
+                    status.getErrors() != null ? status.getErrors().getLocalizedMessage() : null,
+                    status.getValue(),
+                    false
+            ));
         });
-    }
-
-    private State fromStatus(Status<UserEntity> status) {
-        return new State(
-                status.getErrors() != null ? status.getErrors().getLocalizedMessage(): null,
-                status.getValue(),
-                false
-        );
     }
 
     public class State {

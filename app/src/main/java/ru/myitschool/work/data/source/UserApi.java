@@ -13,7 +13,7 @@ public interface UserApi {
     @GET("api/{login}/info")
     Call<UserDto> getByLogin(@Path("login") String login);
     @GET("api/{login}/auth")
-    Call<Void> isExist(@Path("username") String login);
+    Call<Void> isExist(@Path("login") String login);
     @PATCH("api/{login}/open/")
     Call<Void> openDoor(@Path("login") String login, @Body QrDto qrDto);
 }

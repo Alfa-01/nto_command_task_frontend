@@ -3,6 +3,7 @@ package ru.myitschool.work.ui.qr.result;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import ru.myitschool.work.ui.qr.scan.QrScanDestination;
 public class QrResultFragment extends Fragment {
 
     private FragmentQrResultBinding binding;
-    private String resultQr;
+    private Bundle resultQr;
     private QrResultViewModel viewModel;
 
     public QrResultFragment() {
@@ -28,31 +29,40 @@ public class QrResultFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        binding = FragmentQrResultBinding.bind(view);
-
-        binding.close.setOnClickListener(v -> {
-            if (getView() != null) {
-                Navigation.findNavController(getView()).navigate(
-                        R.id.action_qrResultFragment_to_userFragment);
-            }
-        });
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
             @Override
-            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
-                resultQr = bundle.getString(QrScanDestination.REQUEST_KEY);
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                resultQr = result;
             }
         });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.d("status", String.valueOf(resultQr != null));
+
+        if (getView() != null && resultQr == null) {
+            Navigation.findNavController(getView()).navigate(R.id.action_qrResultFragment_to_qrScanFragment);
+            return;
+        }
+
+        binding = FragmentQrResultBinding.bind(view);
 
         viewModel = new ViewModelProvider(this).get(QrResultViewModel.class);
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
             if (state.getErrorMessage() == null && state.isOpened()) {
                 binding.result.setText(R.string.door_opened);
-            } else {
+            } else if (state.getErrorMessage() != null) {
                 binding.result.setText(R.string.error);
                 Toast.makeText(getContext(), state.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            } else {
+                binding.result.setText(R.string.error);
+                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -60,9 +70,16 @@ public class QrResultFragment extends Fragment {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
             String login = sharedPreferences.getString("login", null);
             if (login != null && getView() != null) {
-                viewModel.update(login, resultQr);
+                viewModel.update(login, "12314543654745676");
             }
         }
+
+        binding.close.setOnClickListener(v -> {
+            if (getView() != null) {
+                Navigation.findNavController(getView()).navigate(
+                        R.id.action_qrResultFragment_to_userFragment);
+            }
+        });
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.myitschool.work.ui.qr.scan
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageAnalysis
@@ -65,6 +66,7 @@ class QrScanFragment : Fragment(R.layout.fragment_qr_scan) {
                     goBack()
                 }
                 is QrScanViewModel.Action.CloseWithResult -> {
+                    Log.d("result", action.result)
                     sendResult(QrScanDestination.packToBundle(action.result))
                     goBack()
                 }

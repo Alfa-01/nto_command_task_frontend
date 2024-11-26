@@ -1,6 +1,6 @@
 package ru.myitschool.work.ui.login;
 
-import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,11 +52,12 @@ public class LoginViewModel extends ViewModel {
         }
         isUserExistUseCase.execute(currentLogin, status -> {
             if (status.getValue() == null || status.getErrors() != null) {
+                Log.e("errors", status.getErrors().getLocalizedMessage());
                 mutableErrorLiveData.postValue("Something went wrong. Try again later");
                 return;
             }
             if (status.getStatusCode() == 401) {
-                mutableErrorLiveData.postValue("Логина не существует или неверный");
+                mutableErrorLiveData.postValue("There is no such login or incorrect");
             }
             if (status.getStatusCode() == 200) {
                 mutableOpenProfileLiveData.postValue(null);

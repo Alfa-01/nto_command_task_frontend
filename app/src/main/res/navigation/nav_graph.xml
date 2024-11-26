@@ -9,9 +9,6 @@
         android:name="ru.myitschool.work.ui.profile.UserFragment"
         android:label="UserFragment" >
         <action
-            android:id="@+id/action_userFragment_to_qrScanFragment"
-            app:destination="@id/qrScanFragment" />
-        <action
             android:id="@+id/action_userFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
@@ -23,8 +20,8 @@
         android:name="ru.myitschool.work.ui.qr.scan.QrScanFragment"
         android:label="QrScanFragment" >
         <action
-            android:id="@+id/action_qrScanFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            android:id="@+id/action_qrScanFragment_to_qrResultFragment"
+            app:destination="@id/qrResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -41,5 +38,8 @@
         <action
             android:id="@+id/action_qrResultFragment_to_userFragment"
             app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_qrResultFragment_to_qrScanFragment"
+            app:destination="@id/qrScanFragment" />
     </fragment>
 </navigation>
