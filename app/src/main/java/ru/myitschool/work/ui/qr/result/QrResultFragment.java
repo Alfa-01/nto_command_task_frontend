@@ -29,18 +29,6 @@ public class QrResultFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
-            }
-        });
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -50,6 +38,15 @@ public class QrResultFragment extends Fragment {
             Navigation.findNavController(getView()).navigate(R.id.action_qrResultFragment_to_qrScanFragment);
             return;
         }
+
+        getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
+            }
+        });
+
+        Log.d("status", String.valueOf(resultQr != null));
 
         binding = FragmentQrResultBinding.bind(view);
 
