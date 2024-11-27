@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NTO Pass</string>
+    <string name="scan_qr_text">Scan QR</string>
+    <string name="login_hint">Enter login</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="login">Login</string>
+    <string name="refresh_data">Refresh</string>
+    <string name="to_main_menu">Close</string>
+    <string name="door_opened">Success</string>
+    <string name="door_closed">Operation was cancelled</string>
+    <string name="error">Something went wrong</string>
+    <string name="close_button">Close</string>
+    <string name="logout_text">Logout</string>
+</resources>

@@ -9,7 +9,6 @@
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="OK"
         android:textSize="50dp" />
 
     <Button
@@ -29,8 +28,5 @@
         android:orientation="vertical"
         app:flow_verticalStyle="packed"
         app:flow_verticalGap="24dp" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

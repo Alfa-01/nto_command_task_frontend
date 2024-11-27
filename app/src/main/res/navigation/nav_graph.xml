@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/userFragment"
         android:name="ru.myitschool.work.ui.profile.UserFragment"
-        android:label="UserFragment" >
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_user">
         <action
             android:id="@+id/action_userFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -19,6 +21,7 @@
             app:destination="@id/qrScanFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_qr_scan"
         android:id="@+id/qrScanFragment"
         android:name="ru.myitschool.work.ui.qr.scan.QrScanFragment"
         android:label="QrScanFragment" >
@@ -27,19 +30,25 @@
             app:destination="@id/userFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_login"
         android:id="@+id/loginFragment"
         android:name="ru.myitschool.work.ui.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            app:destination="@id/userFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_qr_result"
         android:id="@+id/qrResultFragment"
         android:name="ru.myitschool.work.ui.qr.result.QrResultFragment"
         android:label="QrResultFragment" >
         <action
             android:id="@+id/action_qrResultFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            app:destination="@id/userFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

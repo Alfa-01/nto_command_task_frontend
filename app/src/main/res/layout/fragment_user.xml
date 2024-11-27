@@ -33,7 +33,6 @@
         android:id="@+id/error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         tools:text="ошибка" />
 
     <Button
@@ -60,7 +59,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:flow_verticalGap="24dp"
-        app:constraint_referenced_ids="fullname,photo,position,lastEntry,error,logout,refresh,scan"
+        app:constraint_referenced_ids="fullname,photo,position,lastEntry,logout,refresh,scan,error"
         app:flow_lastVerticalStyle="spread"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

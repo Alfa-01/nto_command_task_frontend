@@ -3,7 +3,6 @@ package ru.myitschool.work.ui.profile;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -40,6 +39,12 @@ public class UserFragment extends Fragment {
             UserEntity entity = state.getItem();
             if (entity == null) {
                 return;
+            } else if (state.getErrorMessage() != null) {
+                binding.error.setVisibility(View.VISIBLE);
+                binding.error.setText(state.getErrorMessage());
+
+                binding.logout.setVisibility(View.GONE);
+                binding.scan.setVisibility(View.GONE);
             } else {
                 binding.photo.setVisibility(Utils.visibleOrGone(entity.getPhotoUrl() != null));
                 binding.position.setVisibility(Utils.visibleOrGone(entity.getPosition() != null));
@@ -60,6 +65,14 @@ public class UserFragment extends Fragment {
                     "login", Context.MODE_PRIVATE);
             viewModel.update(preferences.getString("login", ""));
         }
+
+        binding.refresh.setOnClickListener(v -> {
+            if (getContext() != null) {
+                SharedPreferences preferences = getContext().getSharedPreferences(
+                        "login", Context.MODE_PRIVATE);
+                viewModel.update(preferences.getString("login", ""));
+            }
+        });
 
         binding.scan.setOnClickListener(v -> {
                 Navigation.findNavController(getView()).navigate(
@@ -82,10 +95,11 @@ public class UserFragment extends Fragment {
         getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                Log.d("result1", QrScanDestination.INSTANCE.getDataIfExist(result));
-                getParentFragmentManager().setFragmentResult("requestKey", result);
-                Navigation.findNavController(getView()).navigate(
-                        R.id.action_userFragment_to_qrResultFragment);
+                if (QrScanDestination.INSTANCE.getDataIfExist(result) != null) {
+                    getParentFragmentManager().setFragmentResult("requestKey", result);
+                    Navigation.findNavController(getView()).navigate(
+                            R.id.action_userFragment_to_qrResultFragment);
+                }
             }
         });
 

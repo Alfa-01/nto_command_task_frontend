@@ -39,15 +39,15 @@ public class QrResultFragment extends Fragment {
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
 
+                if (resultQr == null) {
+                    binding.result.setText(R.string.door_closed);
+                }
+
                 viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
                     if (state.getErrorMessage() == null && state.isOpened()) {
                         binding.result.setText(R.string.door_opened);
                     } else if (state.getErrorMessage() != null) {
                         binding.result.setText(R.string.error);
-                        Toast.makeText(getContext(), state.getErrorMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        binding.result.setText(R.string.error);
-                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                     }
                 });
 

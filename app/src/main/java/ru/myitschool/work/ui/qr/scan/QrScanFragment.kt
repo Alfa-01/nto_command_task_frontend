@@ -66,7 +66,6 @@ class QrScanFragment : Fragment(R.layout.fragment_qr_scan) {
                     goBack()
                 }
                 is QrScanViewModel.Action.CloseWithResult -> {
-                    Log.d("result", action.result)
                     sendResult(QrScanDestination.packToBundle(action.result))
                     goBack()
                 }

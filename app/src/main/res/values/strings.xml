@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">NTO Pass</string>
-    <string name="logout_text">Выйти из аккаунта</string>
     <string name="scan_qr_text">Сканировать QR-код</string>
     <string name="login_hint">Введите логин</string>
     <string name="welcome_text">Добро пожаловать</string>
     <string name="login">Войти</string>
     <string name="refresh_data">Обновить данные</string>
     <string name="to_main_menu">Закрыть</string>
-    <string name="door_opened">Дверь открыта</string>
-    <string name="error">Ошибка доступа</string>
+    <string name="door_opened">успешно</string>
+    <string name="door_closed">Вход был отменён</string>
+    <string name="error">Что-то пошло не так</string>
+    <string name="logout_text">Выйти из аккаунта</string>
 </resources>

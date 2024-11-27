@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import ru.myitschool.work.R;
 import ru.myitschool.work.databinding.FragmentLoginBinding;
 import ru.myitschool.work.utils.OnChangeText;
+import ru.myitschool.work.utils.Utils;
 
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
@@ -55,7 +56,8 @@ public class LoginFragment extends Fragment {
 
     private void subscribe(LoginViewModel viewModel) {
         viewModel.errorLiveData.observe(getViewLifecycleOwner(), error -> {
-            Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            binding.error.setVisibility(Utils.visibleOrGone(error != null));
+            binding.error.setText(error);
         });
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
             binding.login.setClickable(state.isButtonActive());
