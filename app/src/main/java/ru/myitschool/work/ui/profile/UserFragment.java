@@ -1,8 +1,9 @@
 package ru.myitschool.work.ui.profile;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import static ru.myitschool.work.core.Constants.RESPONSE_KEY;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -64,29 +65,26 @@ public class UserFragment extends Fragment {
             }
         });
 
-        if (getContext() != null) {
-            SharedPreferences preferences = getContext().getSharedPreferences(
-                    "login", Context.MODE_PRIVATE);
-            viewModel.update(preferences.getString("login", ""));
+        if (getContext() != null && Utils.getLogin(getContext()) != null) {
+            Log.d("login", Utils.getLogin(getContext()));
+            viewModel.update(Utils.getLogin(getContext()));
         }
 
         binding.refresh.setOnClickListener(v -> {
-            if (getContext() != null) {
-                SharedPreferences preferences = getContext().getSharedPreferences(
-                        "login", Context.MODE_PRIVATE);
-                viewModel.update(preferences.getString("login", ""));
+            if (getContext() != null && Utils.getLogin(getContext()) != null) {
+                viewModel.update(Utils.getLogin(getContext()));
             }
         });
 
-        binding.scan.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(
-                R.id.action_userFragment_to_qrScanFragment));
+        binding.scan.setOnClickListener(v -> {
+                    if (getView() != null)
+                        Navigation.findNavController(getView()).navigate(
+                            R.id.action_userFragment_to_qrScanFragment);
+                });
 
         binding.logout.setOnClickListener(v -> {
             if (getContext() != null) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("login", null);
-                editor.commit();
+                Utils.deleteLogin(getContext());
             }
             if (getView() != null) {
                 Navigation.findNavController(getView()).navigate(
@@ -98,9 +96,10 @@ public class UserFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 if (QrScanDestination.INSTANCE.getDataIfExist(result) != null) {
-                    getParentFragmentManager().setFragmentResult(QrScanDestination.REQUEST_KEY, result);
-                    Navigation.findNavController(getView()).navigate(
-                            R.id.action_userFragment_to_qrResultFragment);
+                    getParentFragmentManager().setFragmentResult(RESPONSE_KEY, result);
+                    if (getView() != null)
+                        Navigation.findNavController(getView()).navigate(
+                                R.id.action_userFragment_to_qrResultFragment);
                 }
             }
         });

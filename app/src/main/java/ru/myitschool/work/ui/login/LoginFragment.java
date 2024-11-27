@@ -1,7 +1,5 @@
 package ru.myitschool.work.ui.login;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -31,12 +29,9 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (getContext() != null) {
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-            if (sharedPreferences.getString("login", null) != null && getView() != null) {
-
+            if (Utils.getLogin(getContext()) != null && getView() != null)
                 Navigation.findNavController(getView()).navigate(
                         R.id.action_loginFragment_to_userFragment);
-            }
         }
 
         binding = FragmentLoginBinding.bind(view);
@@ -71,10 +66,7 @@ public class LoginFragment extends Fragment {
         viewModel.openProfileLiveData.observe(getViewLifecycleOwner(), (unused) -> {
 
             if (getContext() != null) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("login", binding.username.getText().toString());
-                editor.commit();
+                Utils.saveLogin(binding.username.getText().toString(), getContext());
             }
 
             if (getView() == null) return;

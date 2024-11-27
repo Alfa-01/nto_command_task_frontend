@@ -1,7 +1,7 @@
 package ru.myitschool.work.ui.qr.result;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import static ru.myitschool.work.core.Constants.RESPONSE_KEY;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import ru.myitschool.work.R;
 import ru.myitschool.work.databinding.FragmentQrResultBinding;
 import ru.myitschool.work.ui.qr.scan.QrScanDestination;
+import ru.myitschool.work.utils.Utils;
 
 public class QrResultFragment extends Fragment {
 
@@ -33,30 +34,26 @@ public class QrResultFragment extends Fragment {
         binding = FragmentQrResultBinding.bind(view);
         viewModel = new ViewModelProvider(this).get(QrResultViewModel.class);
 
-        getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener(RESPONSE_KEY, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
 
-                if (resultQr == null) {
-                    binding.result.setText(R.string.door_closed);
-                    binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
+                if (getContext() != null && Utils.getLogin(getContext()) != null) {
+                    viewModel.update(Utils.getLogin(getContext()), resultQr);
                 }
+            }
+        });
 
-                viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
-                    if (state.getErrorMessage() == null && state.isOpened()) {
-                        binding.result.setText(R.string.door_opened);
-                    } else if (state.getErrorMessage() != null) {
-                        binding.result.setText(R.string.error);
-                    }
-                });
-
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-                String login = sharedPreferences.getString("login", null);
-
-                if (login != null) {
-                    viewModel.update(login, resultQr);
-                }
+        viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
+            if (state.getErrorMessage() == null && state.isOpened()) {
+                binding.result.setText(R.string.door_opened);
+                binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.main_button, getContext().getTheme()));
+            } else if (state.getErrorMessage() != null) {
+                binding.result.setText(R.string.error);
+            } else if (resultQr == null) {
+                binding.result.setText(R.string.door_closed);
+                binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
             }
         });
 
