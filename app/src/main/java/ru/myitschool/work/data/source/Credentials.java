@@ -1,6 +1,5 @@
 package ru.myitschool.work.data.source;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class Credentials {

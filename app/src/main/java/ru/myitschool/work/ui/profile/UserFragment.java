@@ -74,10 +74,8 @@ public class UserFragment extends Fragment {
             }
         });
 
-        binding.scan.setOnClickListener(v -> {
-                Navigation.findNavController(getView()).navigate(
-                        R.id.action_userFragment_to_qrScanFragment);
-        });
+        binding.scan.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(
+                R.id.action_userFragment_to_qrScanFragment));
 
         binding.logout.setOnClickListener(v -> {
             if (getContext() != null) {

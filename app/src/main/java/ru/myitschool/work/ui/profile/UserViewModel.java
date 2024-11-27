@@ -1,7 +1,5 @@
 package ru.myitschool.work.ui.profile;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -9,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import ru.myitschool.work.data.UserRepositoryImplementation;
-import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.entities.UserEntity;
 import ru.myitschool.work.domain.user.GetUserByLoginUseCase;
 

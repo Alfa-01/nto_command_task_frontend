@@ -1,7 +1,5 @@
 package ru.myitschool.work.ui.login;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -14,9 +12,7 @@ import ru.myitschool.work.domain.login.IsUserExistUseCase;
 public class LoginViewModel extends ViewModel {
 
     private final State INIT_STATE = new State(false);
-    private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>(
-            INIT_STATE
-    );
+    private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>(INIT_STATE);
     public final LiveData<State> stateLiveData = mutableStateLiveData;
     private final MutableLiveData<String> mutableErrorLiveData = new MutableLiveData<String>();
     public final LiveData<String> errorLiveData = mutableErrorLiveData;
@@ -52,7 +48,6 @@ public class LoginViewModel extends ViewModel {
         }
         isUserExistUseCase.execute(currentLogin, status -> {
             if (status.getValue() == null || status.getErrors() != null) {
-                Log.e("errors", status.getErrors().getLocalizedMessage());
                 mutableErrorLiveData.postValue("Something went wrong. Try again later");
                 return;
             }

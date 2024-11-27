@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,9 +57,7 @@ public class LoginFragment extends Fragment {
             binding.error.setVisibility(Utils.visibleOrGone(error != null));
             binding.error.setText(error);
         });
-        viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
-            binding.login.setClickable(state.isButtonActive());
-        });
+        viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> binding.login.setClickable(state.isButtonActive()));
         viewModel.openProfileLiveData.observe(getViewLifecycleOwner(), (unused) -> {
 
             if (getContext() != null) {
@@ -72,7 +68,6 @@ public class LoginFragment extends Fragment {
             }
 
             if (getView() == null) return;
-            Log.d("process", "navigated");
             Navigation.findNavController(getView()).navigate(
                     R.id.action_loginFragment_to_userFragment);
         });

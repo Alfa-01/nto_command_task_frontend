@@ -20,9 +20,7 @@ public class QrResultViewModel extends ViewModel {
     );
 
     public void update(@NonNull String login, @NonNull String qr) {
-        pushQrUseCase.execute(new QrEntity(login, qr), status -> {
-            mutableStateLiveData.postValue(fromStatus(status));
-        });
+        pushQrUseCase.execute(new QrEntity(login, qr), status -> mutableStateLiveData.postValue(fromStatus(status)));
     }
 
     private State fromStatus(Status<Boolean> status) {

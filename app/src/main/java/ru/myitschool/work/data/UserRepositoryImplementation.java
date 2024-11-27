@@ -1,7 +1,5 @@
 package ru.myitschool.work.data;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;

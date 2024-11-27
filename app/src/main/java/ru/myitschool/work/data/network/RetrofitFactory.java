@@ -4,7 +4,6 @@ import static ru.myitschool.work.core.Constants.SERVER_ADDRESS;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.myitschool.work.data.UserRepositoryImplementation;
 import ru.myitschool.work.data.source.UserApi;
 
 public class RetrofitFactory {
