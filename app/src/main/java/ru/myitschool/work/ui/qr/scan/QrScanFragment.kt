@@ -1,7 +1,6 @@
 package ru.myitschool.work.ui.qr.scan
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageAnalysis
