@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/photo"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="60dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:textAlignment="center"
+                android:id="@+id/fullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_bold"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:maxWidth="280dp"
+                tools:text="Алексеев Виталий Александрович" />
+
+            <TextView
+                android:layout_marginTop="4dp"
+                android:textColor="@color/main_button_color"
+                android:id="@+id/position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Начальник" />
+
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_marginEnd="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_visit" />
+
+                <TextView
+                    android:fontFamily="@font/manrope_light"
+                    android:id="@+id/lastEntry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="19.09.24:10:00:01" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:textColor="@color/warn_button_color"
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Some error"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:foreground="?attr/selectableItemBackground"
+            android:textColor="@color/warn_button_color"
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logout_text"
+            android:background="@drawable/warn_button_outline"/>
+
+        <Button
+            android:foreground="?attr/selectableItemBackground"
+            android:textColor="@color/main_button_color"
+            android:layout_marginTop="10dp"
+            android:id="@+id/refresh"
+            android:text="@string/refresh_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_button_outline"/>
+
+        <Button
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/main_button"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:id="@+id/scan"
+            android:text="@string/scan_qr_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

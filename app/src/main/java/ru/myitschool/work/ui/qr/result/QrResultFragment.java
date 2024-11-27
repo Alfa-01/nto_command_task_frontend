@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,13 +33,14 @@ public class QrResultFragment extends Fragment {
         binding = FragmentQrResultBinding.bind(view);
         viewModel = new ViewModelProvider(this).get(QrResultViewModel.class);
 
-        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
 
                 if (resultQr == null) {
                     binding.result.setText(R.string.door_closed);
+                    binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
                 }
 
                 viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {

@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -57,7 +58,16 @@ public class LoginFragment extends Fragment {
             binding.error.setVisibility(Utils.visibleOrGone(error != null));
             binding.error.setText(error);
         });
-        viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> binding.login.setClickable(state.isButtonActive()));
+        viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
+            binding.login.setClickable(state.isButtonActive());
+            if (state.isButtonActive()) {
+                binding.login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.main_button, getContext().getTheme()));
+                binding.login.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getContext().getTheme()));
+            } else {
+                binding.login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.inactive_button, getContext().getTheme()));
+                binding.login.setTextColor(ResourcesCompat.getColor(getResources(), R.color.black, getContext().getTheme()));
+            }
+        });
         viewModel.openProfileLiveData.observe(getViewLifecycleOwner(), (unused) -> {
 
             if (getContext() != null) {

@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.MessageFormat;
+
 import ru.myitschool.work.R;
 import ru.myitschool.work.databinding.FragmentUserBinding;
 import ru.myitschool.work.domain.entities.UserEntity;
@@ -52,7 +54,9 @@ public class UserFragment extends Fragment {
 
                 binding.fullname.setText(entity.getName());
                 binding.position.setText(entity.getPosition());
-                binding.lastEntry.setText(entity.getLast_visit());
+                String lastVisit = entity.getLast_visit();
+                binding.lastEntry.setText(MessageFormat.format("{0} {1}",
+                        lastVisit.substring(0, 10), lastVisit.substring(11, 16)));
 
                 if (entity.getPhotoUrl() != null) {
                     Picasso.get().load(entity.getPhotoUrl()).into(binding.photo);
@@ -94,7 +98,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 if (QrScanDestination.INSTANCE.getDataIfExist(result) != null) {
-                    getParentFragmentManager().setFragmentResult("requestKey", result);
+                    getParentFragmentManager().setFragmentResult(QrScanDestination.REQUEST_KEY, result);
                     Navigation.findNavController(getView()).navigate(
                             R.id.action_userFragment_to_qrResultFragment);
                 }

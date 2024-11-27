@@ -3,7 +3,7 @@
     <string name="app_name">NTO Pass</string>
     <string name="scan_qr_text">Scan QR</string>
     <string name="login_hint">Enter login</string>
-    <string name="welcome_text">Welcome</string>
+    <string name="welcome_text">Welcome to NTO Pass app</string>
     <string name="login">Login</string>
     <string name="refresh_data">Refresh</string>
     <string name="to_main_menu">Close</string>
@@ -12,4 +12,5 @@
     <string name="error">Something went wrong</string>
     <string name="close_button">Close</string>
     <string name="logout_text">Logout</string>
+    <string name="last_visit">"Last visit:"</string>
 </resources>
