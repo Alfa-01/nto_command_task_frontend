@@ -10,7 +10,6 @@ import ru.myitschool.work.data.UserRepositoryImplementation;
 import ru.myitschool.work.domain.entities.QrEntity;
 import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.qr.PushQrUseCase;
-import ru.myitschool.work.ui.profile.UserViewModel;
 
 public class QrResultViewModel extends ViewModel {
     private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>(

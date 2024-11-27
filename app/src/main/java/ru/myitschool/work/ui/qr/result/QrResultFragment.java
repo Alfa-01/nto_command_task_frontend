@@ -4,15 +4,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import ru.myitschool.work.R;
 import ru.myitschool.work.databinding.FragmentQrResultBinding;
@@ -32,21 +38,20 @@ public class QrResultFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.d("status", String.valueOf(resultQr != null));
-
-        if (getView() != null && resultQr == null) {
-            Navigation.findNavController(getView()).navigate(R.id.action_qrResultFragment_to_qrScanFragment);
-            return;
-        }
-
-        getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
+        NavController navController = NavHostFragment.findNavController(this);
+        MutableLiveData<Bundle> liveData = navController.getCurrentBackStackEntry()
+                .getSavedStateHandle()
+                .getLiveData(QrScanDestination.REQUEST_KEY);
+        liveData.observe(getViewLifecycleOwner(), new Observer<Bundle>() {
             @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
+            public void onChanged(Bundle s) {
+                resultQr = QrScanDestination.INSTANCE.getDataIfExist(s);
             }
         });
 
-        Log.d("status", String.valueOf(resultQr != null));
+        if (getView() != null && resultQr == null) {
+            Navigation.findNavController(getView()).navigate(R.id.action_qrResultFragment_to_qrScanFragment);
+        }
 
         binding = FragmentQrResultBinding.bind(view);
 
