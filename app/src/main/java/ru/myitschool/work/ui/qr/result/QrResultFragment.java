@@ -31,45 +31,34 @@ public class QrResultFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding = FragmentQrResultBinding.bind(view);
+        viewModel = new ViewModelProvider(this).get(QrResultViewModel.class);
 
-        Log.d("status", String.valueOf(resultQr != null));
-
-        if (getView() != null && resultQr == null) {
-            Navigation.findNavController(getView()).navigate(R.id.action_qrResultFragment_to_qrScanFragment);
-            return;
-        }
-
-        getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
+
+                viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
+                    if (state.getErrorMessage() == null && state.isOpened()) {
+                        binding.result.setText(R.string.door_opened);
+                    } else if (state.getErrorMessage() != null) {
+                        binding.result.setText(R.string.error);
+                        Toast.makeText(getContext(), state.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        binding.result.setText(R.string.error);
+                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                String login = sharedPreferences.getString("login", null);
+
+                if (login != null) {
+                    viewModel.update(login, resultQr);
+                }
             }
         });
-
-        Log.d("status", String.valueOf(resultQr != null));
-
-        binding = FragmentQrResultBinding.bind(view);
-
-        viewModel = new ViewModelProvider(this).get(QrResultViewModel.class);
-        viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
-            if (state.getErrorMessage() == null && state.isOpened()) {
-                binding.result.setText(R.string.door_opened);
-            } else if (state.getErrorMessage() != null) {
-                binding.result.setText(R.string.error);
-                Toast.makeText(getContext(), state.getErrorMessage(), Toast.LENGTH_SHORT).show();
-            } else {
-                binding.result.setText(R.string.error);
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        if (getContext() != null) {
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-            String login = sharedPreferences.getString("login", null);
-            if (login != null && resultQr != null) {
-                viewModel.update(login, resultQr);
-            }
-        }
 
         binding.close.setOnClickListener(v -> {
             if (getView() != null) {

@@ -1,5 +1,7 @@
 package ru.myitschool.work.domain.qr;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;

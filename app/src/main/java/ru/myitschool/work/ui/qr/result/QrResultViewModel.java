@@ -10,12 +10,9 @@ import ru.myitschool.work.data.UserRepositoryImplementation;
 import ru.myitschool.work.domain.entities.QrEntity;
 import ru.myitschool.work.domain.entities.Status;
 import ru.myitschool.work.domain.qr.PushQrUseCase;
-import ru.myitschool.work.ui.profile.UserViewModel;
 
 public class QrResultViewModel extends ViewModel {
-    private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>(
-            new State(null, false)
-    );
+    private final MutableLiveData<State> mutableStateLiveData = new MutableLiveData<State>();
     public final LiveData<State> stateLiveData = mutableStateLiveData;
 
     public final PushQrUseCase pushQrUseCase = new PushQrUseCase(
@@ -31,12 +28,13 @@ public class QrResultViewModel extends ViewModel {
     private State fromStatus(Status<Boolean> status) {
         return new State(
                 status.getErrors() != null ? status.getErrors().getLocalizedMessage(): null,
-                status.getValue() != null ? status.getValue(): false
+                status.getValue() != null ? status.getValue() : false
         );
     }
 
 
     public class State {
+
         @Nullable
         private final String errorMessage;
         private final boolean isOpened;

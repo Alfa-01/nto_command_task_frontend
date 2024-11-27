@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class QrDto {
     @Nullable
-    @SerializedName("code")
+    @SerializedName("value")
     public String code;
 
     public QrDto(@Nullable String code) {

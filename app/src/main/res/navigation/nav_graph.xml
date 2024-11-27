@@ -14,14 +14,17 @@
         <action
             android:id="@+id/action_userFragment_to_qrResultFragment"
             app:destination="@id/qrResultFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_qrScanFragment"
+            app:destination="@id/qrScanFragment" />
     </fragment>
     <fragment
         android:id="@+id/qrScanFragment"
         android:name="ru.myitschool.work.ui.qr.scan.QrScanFragment"
         android:label="QrScanFragment" >
         <action
-            android:id="@+id/action_qrScanFragment_to_qrResultFragment"
-            app:destination="@id/qrResultFragment" />
+            android:id="@+id/action_qrScanFragment_to_userFragment"
+            app:destination="@id/userFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -38,8 +41,5 @@
         <action
             android:id="@+id/action_qrResultFragment_to_userFragment"
             app:destination="@id/userFragment" />
-        <action
-            android:id="@+id/action_qrResultFragment_to_qrScanFragment"
-            app:destination="@id/qrScanFragment" />
     </fragment>
 </navigation>
