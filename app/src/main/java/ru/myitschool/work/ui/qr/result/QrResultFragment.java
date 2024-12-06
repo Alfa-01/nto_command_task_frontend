@@ -3,6 +3,7 @@ package ru.myitschool.work.ui.qr.result;
 import static ru.myitschool.work.core.Constants.RESPONSE_KEY;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ public class QrResultFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null)
+            resultQr = savedInstanceState.getString(QrScanDestination.REQUEST_KEY);
         binding = FragmentQrResultBinding.bind(view);
         viewModel = new ViewModelProvider(this).get(QrResultViewModel.class);
 
@@ -46,13 +49,15 @@ public class QrResultFragment extends Fragment {
         });
 
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
-            if (state.getErrorMessage() == null && state.isOpened()) {
+            Log.d("status", resultQr != null ? resultQr : "None");
+            if (resultQr == null) {
+                binding.result.setText(R.string.door_closed);
+                binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
+            } else if (state.getErrorMessage() == null && state.isOpened()) {
                 binding.result.setText(R.string.door_opened);
                 binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.main_button, getContext().getTheme()));
-            } else if (state.getErrorMessage() != null) {
+            } else if (state.getErrorMessage() != null || !state.isOpened()) {
                 binding.result.setText(R.string.error);
-            } else if (resultQr == null) {
-                binding.result.setText(R.string.door_closed);
                 binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
             }
         });
@@ -63,6 +68,12 @@ public class QrResultFragment extends Fragment {
                         R.id.action_qrResultFragment_to_userFragment);
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(QrScanDestination.REQUEST_KEY, resultQr);
     }
 
     @Override

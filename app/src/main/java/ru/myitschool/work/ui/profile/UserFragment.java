@@ -95,12 +95,10 @@ public class UserFragment extends Fragment {
         getParentFragmentManager().setFragmentResultListener(QrScanDestination.REQUEST_KEY, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                if (QrScanDestination.INSTANCE.getDataIfExist(result) != null) {
-                    getParentFragmentManager().setFragmentResult(RESPONSE_KEY, result);
-                    if (getView() != null)
-                        Navigation.findNavController(getView()).navigate(
-                                R.id.action_userFragment_to_qrResultFragment);
-                }
+                getParentFragmentManager().setFragmentResult(RESPONSE_KEY, result);
+                if (getView() != null)
+                    Navigation.findNavController(getView()).navigate(
+                            R.id.action_userFragment_to_qrResultFragment);
             }
         });
 

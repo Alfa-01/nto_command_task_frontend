@@ -15,7 +15,7 @@ public class PushQrUseCase {
     }
     public void execute(@NonNull QrEntity qrEntity, Consumer<Status<Boolean>> callback) {
         repository.pushQr(qrEntity, status -> {
-            boolean isOpened = status.getStatusCode() == 200 || status.getStatusCode() == 401;
+            boolean isOpened = status.getStatusCode() == 200 || status.getStatusCode() == 400 || status.getStatusCode() == 401;
             callback.accept(
                     new Status<>(
                             status.getStatusCode(),
