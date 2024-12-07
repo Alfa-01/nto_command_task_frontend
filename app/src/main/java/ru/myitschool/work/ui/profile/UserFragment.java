@@ -1,6 +1,6 @@
 package ru.myitschool.work.ui.profile;
 
-import static ru.myitschool.work.core.Constants.RESPONSE_KEY;
+import static ru.myitschool.work.ui.qr.result.QrResultFragment.RESPONSE_KEY;
 
 import android.os.Bundle;
 import android.util.Log;

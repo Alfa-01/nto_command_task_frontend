@@ -1,7 +1,5 @@
 package ru.myitschool.work.ui.qr.result;
 
-import static ru.myitschool.work.core.Constants.RESPONSE_KEY;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +19,7 @@ import ru.myitschool.work.utils.Utils;
 
 public class QrResultFragment extends Fragment {
 
+    public static final String RESPONSE_KEY = "response_qr";
     private FragmentQrResultBinding binding;
     private String resultQr;
     private QrResultViewModel viewModel;
