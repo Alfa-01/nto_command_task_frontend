@@ -3,7 +3,6 @@ package ru.myitschool.work.ui.profile;
 import static ru.myitschool.work.ui.qr.result.QrResultFragment.RESPONSE_KEY;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -40,15 +39,13 @@ public class UserFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(UserViewModel.class);
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
             UserEntity entity = state.getItem();
-            if (entity == null) {
-                return;
-            } else if (state.getErrorMessage() != null) {
+            if (state.getErrorMessage() != null) {
                 binding.error.setVisibility(View.VISIBLE);
                 binding.error.setText(state.getErrorMessage());
 
                 binding.logout.setVisibility(View.GONE);
                 binding.scan.setVisibility(View.GONE);
-            } else {
+            } else if (entity != null) {
                 binding.photo.setVisibility(Utils.visibleOrGone(entity.getPhotoUrl() != null));
                 binding.position.setVisibility(Utils.visibleOrGone(entity.getPosition() != null));
                 binding.lastEntry.setVisibility(Utils.visibleOrGone(entity.getLast_visit() != null));
@@ -66,7 +63,6 @@ public class UserFragment extends Fragment {
         });
 
         if (getContext() != null && Utils.getLogin(getContext()) != null) {
-            Log.d("login", Utils.getLogin(getContext()));
             viewModel.update(Utils.getLogin(getContext()));
         }
 

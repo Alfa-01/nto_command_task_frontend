@@ -49,10 +49,8 @@ public class LoginFragment extends Fragment {
 
 
     private void subscribe(LoginViewModel viewModel) {
-        viewModel.errorLiveData.observe(getViewLifecycleOwner(), error -> {
-            binding.error.setVisibility(Utils.visibleOrGone(error != null));
-            binding.error.setText(error);
-        });
+        viewModel.errorLiveData.observe(getViewLifecycleOwner(), error ->
+                binding.error.setVisibility(Utils.visibleOrGone(error != null)));
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
             binding.login.setClickable(state.isButtonActive());
             if (state.isButtonActive()) {
