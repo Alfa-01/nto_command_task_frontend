@@ -40,22 +40,18 @@ public class QrResultFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 resultQr = QrScanDestination.INSTANCE.getDataIfExist(result);
-
-                if (getContext() != null && Utils.getLogin(getContext()) != null) {
-                    viewModel.update(Utils.getLogin(getContext()), resultQr);
-                }
+                viewModel.update(Utils.getLogin(getContext()), resultQr);
             }
         });
 
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
-            Log.d("status", resultQr != null ? resultQr : "None");
             if (resultQr == null) {
                 binding.result.setText(R.string.door_closed);
                 binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
-            } else if (state.getErrorMessage() == null && state.isOpened()) {
+            } else if (state.isOpened()) {
                 binding.result.setText(R.string.door_opened);
                 binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.main_button, getContext().getTheme()));
-            } else if (state.getErrorMessage() != null || !state.isOpened()) {
+            } else {
                 binding.result.setText(R.string.error);
                 binding.close.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.warn_button, getContext().getTheme()));
             }

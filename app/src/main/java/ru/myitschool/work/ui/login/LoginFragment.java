@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
         viewModel.errorLiveData.observe(getViewLifecycleOwner(), error ->
                 binding.error.setVisibility(Utils.visibleOrGone(error != null)));
         viewModel.stateLiveData.observe(getViewLifecycleOwner(), state -> {
-            binding.login.setClickable(state.isButtonActive());
+            binding.login.setEnabled(state.isButtonActive());
             if (state.isButtonActive()) {
                 binding.login.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.main_button, getContext().getTheme()));
                 binding.login.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, getContext().getTheme()));

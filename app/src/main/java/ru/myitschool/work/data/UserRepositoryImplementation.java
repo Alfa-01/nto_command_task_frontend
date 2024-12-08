@@ -36,21 +36,22 @@ public class UserRepositoryImplementation implements UserRepository, LoginReposi
         userApi.getByLogin(login).enqueue(new CallToConsumer<>(
                 callback,
                 userDto -> {
-                    final String resultLogin = userDto.login;
-                    final String id = userDto.id;
-                    final String name = userDto.name;
-                    if (resultLogin != null && id != null && name != null) {
-                        return new UserEntity(
-                                id,
-                                resultLogin,
-                                name,
-                                userDto.lastVisit,
-                                userDto.photoUrl,
-                                userDto.position
-                        );
-                    } else {
-                        return null;
+                    if (userDto != null) {
+                        final String resultLogin = userDto.login;
+                        final String id = userDto.id;
+                        final String name = userDto.name;
+                        if (resultLogin != null && id != null && name != null) {
+                            return new UserEntity(
+                                    id,
+                                    resultLogin,
+                                    name,
+                                    userDto.lastVisit,
+                                    userDto.photoUrl,
+                                    userDto.position
+                            );
+                        }
                     }
+                    return null;
                 }
         ));
     }

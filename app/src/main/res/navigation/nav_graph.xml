@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_user">
         <action
             android:id="@+id/action_userFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_userFragment_to_qrResultFragment"
             app:destination="@id/qrResultFragment" />

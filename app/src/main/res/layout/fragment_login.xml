@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:clickable="false"
+            android:enabled="false"
             android:background="@drawable/inactive_button" />
 
         <TextView

@@ -53,8 +53,7 @@ public class LoginViewModel extends ViewModel {
             }
             if (status.getStatusCode() == 401) {
                 mutableErrorLiveData.postValue("There is no such login or incorrect");
-            }
-            if (status.getStatusCode() == 200) {
+            } else if (status.getStatusCode() == 200) {
                 mutableOpenProfileLiveData.postValue(null);
             }
         });
